@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Send Email</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #ffffff;
+            color: #111111;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 45px 25px;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 17px;
+            line-height: 1.6;
+        }
+
+        .notice {
+            background: #f5f5f5;
+            border-radius: 12px;
+            padding: 18px;
+            margin: 25px 0;
+        }
+
+        .button {
+            display: block;
+            width: 100%;
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 16px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+        }
+
+        .email-button {
+            background: #007aff;
+            color: white;
+        }
+
+        .browser-button {
+            background: #eeeeee;
+            color: #111111;
+            border: 1px solid #cccccc;
+        }
+
+        .copy-button {
+            background: #ffffff;
+            color: #111111;
+            border: 1px solid #bbbbbb;
+        }
+
+        .small {
+            font-size: 14px;
+            color: #666666;
+            margin-top: 30px;
+        }
+
+        #copiedMessage {
+            display: none;
+            color: #16803c;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Send Email</h1>
+
+    <p>
+        Your email is ready.
+    </p>
+
+    <div class="notice">
+
+        <p>
+            If you opened this page from Instagram and the email
+            does not open, please use the button below to open
+            this page in your regular browser.
+        </p>
+
+    </div>
+
+    <!-- MAIN EMAIL BUTTON -->
+
+    <a
+        id="emailButton"
+        class="button email-button"
+        href="#"
+    >
+        📧 Open Email
+    </a>
+
+
+    <!-- EXTERNAL BROWSER BUTTON -->
+
+    <a
+        id="browserButton"
+        class="button browser-button"
+        href="#"
+        target="_blank"
+        rel="noopener noreferrer"
+    >
+        🌐 Open in Browser
+    </a>
+
+
+
+
+
+    <p class="small">
+        If the email application does not open automatically,
+        please open this page in Safari or Chrome and try again.
+    </p>
+
+</div>
+
+
+<script>
+
+    /*
+    ============================================================
+    PASTE YOUR EXISTING MAILTO LINK HERE
+    ============================================================
+
+    IMPORTANT:
+
+    Paste the COMPLETE mailto link between the quotation marks.
+
+    Example:
+
+    const MAILTO_URL =
+        "mailto:example@example.com?subject=Hello&body=Test";
+
+    Do NOT put it in a <script> tag.
+    Do NOT put another quotation mark inside the URL.
+    */
+
+    const MAILTO_URL =
+        "https://free-cloud-web.github.io/Send-Email-RubaGhazal";
+
+
+    /*
+    ============================================================
+    DO NOT CHANGE BELOW THIS LINE
+    ============================================================
+    */
+
+
+    const emailButton = document.getElementById("emailButton");
+
+    const browserButton =
+        document.getElementById("browserButton");
+
+    const copyButton =
+        document.getElementById("copyButton");
+
+    const copiedMessage =
+        document.getElementById("copiedMessage");
+
+
+    /*
+    Main email button
+
+    IMPORTANT:
+    There is NO automatic window.location.href here.
+
+    The user must actually tap the button.
+    */
+
+    emailButton.addEventListener("click", function(event) {
+
+        event.preventDefault();
+
+        window.location.href = MAILTO_URL;
+
+    });
+
+
+    /*
+    Open this same page in another browser tab/window.
+
+    This gives the user another option if Instagram's
+    in-app browser is causing the problem.
+    */
+
+    browserButton.href = window.location.href;
+
+
+    /*
+    Copy the mailto link
+
+    This gives the user a third fallback.
+    */
+
+    copyButton.addEventListener("click", async function() {
+
+        try {
+
+            await navigator.clipboard.writeText(MAILTO_URL);
+
+            copiedMessage.style.display = "block";
+
+            setTimeout(function() {
+                copiedMessage.style.display = "none";
+            }, 3000);
+
+        } catch (error) {
+
+            /*
+            Fallback for browsers that don't support
+            navigator.clipboard.
+            */
+
+            const textArea = document.createElement("textarea");
+
+            textArea.value = MAILTO_URL;
+
+            document.body.appendChild(textArea);
+
+            textArea.select();
+
+            document.execCommand("copy");
+
+            document.body.removeChild(textArea);
+
+            copiedMessage.style.display = "block";
+
+            setTimeout(function() {
+                copiedMessage.style.display = "none";
+            }, 3000);
+        }
+
+    });
+
+</script>
+
+</body>
+</html>
